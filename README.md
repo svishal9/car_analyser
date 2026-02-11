@@ -50,3 +50,38 @@ Sample input
 2021-12-08T23:00:00 11
 2021-12-09T00:00:00 4
 
+## Instructions to run the program
+1. Ensure you have Apache Spark installed and properly set up on your machine.
+2. Save the  code as is.
+3. Run the program using the command line, providing the path to the input file as an argument. For example:
+   ```
+   spark-submit car_analyser.py path/to/input_file.txt
+   ```
+4. The program will output the total number of cars, the daily counts, the top 3 half hours with the most cars, and the 1.5 hour period with the least cars to the console.
+5. Alter log4j.properties to set the logging level to appropriate level to troubleshoot Spark processing.
+
+## Development environment
+- Apache Spark 3.0 or higher
+- Python 3.13 or higher
+- PySpark library for Python
+- The wrapper script `go.sh` is provided to simplify running the program and tests. Ensure it has execute permissions.
+- Options for go.sh:
+  - To run unit tests: `./go.sh run-unit-tests`
+  - To set up the environment, i.e. install dependencies: `./go.sh setup`
+
+## Unit tests
+Unit tests are included in the `tests` directory. To run the tests, use a following command:
+```./go.sh run-unit-tests```
+
+## Assumptions
+- The input file is well-formatted and does not contain any errors or inconsistencies.
+- The timestamps in the input file are in ISO 8601 format and represent the start of a half-hour period.
+- The number of cars is a non-negative integer.
+- The program is designed to run in a Spark environment and may not work correctly in a non-Spark environment.
+- The program does not handle time zones and assumes all timestamps are in the same time zone.
+- The program does not account for daylight saving time changes, which may affect the calculation of daily counts and the 1.5 hour period with the least cars.
+- The program assumes that the input file is not excessively large and can be processed in memory. For very large files, additional optimizations may be necessary.
+- The program does not include error handling for file I/O operations, so it assumes that the specified input file exists and is accessible.
+- The program does not include functionality for writing output to a file or database, and instead outputs results to the console.
+- The program does not include functionality for handling duplicate timestamps or overlapping half-hour periods, and assumes that each timestamp in the input file is unique and represents a distinct half-hour period.
+

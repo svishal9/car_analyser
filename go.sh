@@ -77,6 +77,7 @@ function usage() {
     trace "    run       Run the application"
     trace "    setup     Install dependencies"
     trace "    run-unit-tests     Run Unit tests"
+    trace "    run     Run Spark submit"
     trace "Options are passed through to the sub-command."
 }
 
@@ -98,6 +99,10 @@ function run-unit-tests() {
     ./scripts/run-unit-tests.sh "${subcommand_opts[@]:+${subcommand_opts[@]}}"
 }
 
+function run() {
+    trace "Running Spark submit"
+    ./scripts/run.sh "${subcommand_opts[@]:+${subcommand_opts[@]}}"
+}
 
 script_directory="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 cd "${script_directory}/"

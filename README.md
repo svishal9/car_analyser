@@ -4,27 +4,35 @@ Spark analysis for car traffic
 
 ## Problem statement
 An automated traffic counter sits by a road and counts the number of cars that go past. Every half-hour the counter outputs the number of cars seen and resets the counter to zero. You are part of a development team that has been asked to implement a system to manage this data - the first task required is as follows:
+
 Write a program that reads a file, where each line contains a timestamp (in yyyy-mm-ddThh:mm:ss format, i.e. ISO 8601) for the beginning of a half-hour and the number of cars seen that half hour. An example input is included below. You can assume clean input, as these files are machine-generated.
+
 The program should output:
-The number of cars seen in total
-A sequence of lines where each line contains a date (in yyyy-mm-dd format) and the number of cars seen on that day (eg. 2016-11-23 289) for all days listed in the input file.
-The top 3 half hours with most cars, in the same format as the input file
-The 1.5 hour period with least cars (i.e. 3 contiguous half hour records)
+- The number of cars seen in total
+- A sequence of lines where each line contains a date (in yyyy-mm-dd format) and the number of cars seen on that day (eg. 2016-11-23 289) for all days listed in the input file.
+- The top 3 half hours with most cars, in the same format as the input file
+- The 1.5 hour period with least cars (i.e. 3 contiguous half hour records)
+
 Requirements
-The program must use Spark.
-A solution in Databricks/Jupyter notebooks IS NOT acceptable.
-The program can be written in Python or Scala, and with any libraries you are familiar with. You are encouraged to use modern versions of each language and make use of their features.
-The program must be accompanied with reasonable levels of unit tests.
-The solution should be developed to professional standards, the code may be used and extended by your teammates.
-The solution should be deliverable within a couple of hours - please do not spend excessive amounts of time on this.
-Include the instructions on how to test/run your program as well as any assumption you make for your implementation.
+- The program must use Spark.
+- A solution in Databricks/Jupyter notebooks IS NOT acceptable.
+- The program can be written in Python or Scala, and with any libraries you are familiar with. You are encouraged to use modern versions of each language and make use of their features.
+- The program must be accompanied with reasonable levels of unit tests.
+- The solution should be developed to professional standards, the code may be used and extended by your teammates.
+- The solution should be deliverable within a couple of hours - please do not spend excessive amounts of time on this.
+- Include the instructions on how to test/run your program as well as any assumption you make for your implementation.
+
 Assessment
+
 Your submission will be assessed on the following:
-Correctness of solution
-Readability and fluency of your code (including tests)
-Effectiveness of your tests
-Project structure
+1. Correctness of solution
+2. Readability and fluency of your code (including tests)
+3. Effectiveness of your tests
+4. Project structure
+
+
 Sample input
+```
 2021-12-01T05:00:00 5
 2021-12-01T05:30:00 12
 2021-12-01T06:00:00 14
@@ -49,25 +57,45 @@ Sample input
 2021-12-08T22:00:00 16
 2021-12-08T23:00:00 11
 2021-12-09T00:00:00 4
+```
 
 ## Instructions to run the program
 1. Ensure you have Apache Spark installed and properly set up on your machine.
 2. Save the  code as is.
-3. Run the program using the command line, providing the path to the input file as an argument. For example:
+3. Run the program using the provided `go.sh` script , providing the path to the input file as an argument. For example:
    ```
-   spark-submit car_analyser.py path/to/input_file.txt
+   ./go.sh run path/to/input_file.txt
    ```
-4. The program will output the total number of cars, the daily counts, the top 3 half hours with the most cars, and the 1.5 hour period with the least cars to the console.
-5. Alter log4j.properties to set the logging level to appropriate level to troubleshoot Spark processing.
+   To save some keystrokes,
+   by default the script will look for `app/tests/unit/data/car_data.txt` in the root directory of the project.
+    To use the default file, simply run:
+   ```
+   ./go.sh run
+   ```
+4. You could also use spark-submit command line :
+   ```
+   spark-submit app/src/main.py --file_path path/to/input_file.txt
+   ```
+   If spark-submit is having module import issues,
+   you can set the PYTHONPATH environment variable to the root directory of the project before running the command.
+   For example:
+   ```
+   export PYTHONPATH="$(pwd):$(pwd)/app/src:${PYTHONPATH:-}"
+   spark-submit app/src/main.py --file_path path/to/input_file.txt
+   ```
+5. The program will output the total number of cars, the daily counts, the top 3 half hours with the most cars, and the 1.5-hour period with the least cars to the console.
+6. Alter the logging level to appropriate level if needed.
 
 ## Development environment
-- Apache Spark 3.0 or higher
+- Apache Spark 3.5.4 or higher
 - Python 3.13 or higher
 - PySpark library for Python
-- The wrapper script `go.sh` is provided to simplify running the program and tests. Ensure it has execute permissions.
+- The wrapper script `go.sh` is provided to simplify setup and tests. Ensure it has execute permissions.
 - Options for go.sh:
-  - To run unit tests: `./go.sh run-unit-tests`
   - To set up the environment, i.e. install dependencies: `./go.sh setup`
+  - To run unit tests: `./go.sh run-unit-tests`
+  - To run the main program: `./go.sh run [path/to/input_file.txt]` (if no path is provided, it will use the default file at `app/tests/unit/data/car_data.txt`)
+- The program is configured to use GitHub Actions for continuous integration, which will automatically run unit tests on each commit to the repository at https://github.com/svishal9/car_analyser/actions  
 
 ## Unit tests
 Unit tests are included in the `tests` directory. To run the tests, use a following command:

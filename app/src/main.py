@@ -1,7 +1,7 @@
 import argparse
 
 from common.spark_utils import get_or_create_spark_session
-from print_details.print_analysis import PrintAnalysis
+from report.print_analysis import PrintAnalysis
 
 
 def arg_parser():

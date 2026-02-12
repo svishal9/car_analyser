@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 from pyspark import Row
 
 from app.src.car_traffic.analysis import CarDataAnalyzer
-from app.src.print_details.print_analysis import PrintAnalysis
+from app.src.report.print_analysis import PrintAnalysis
 
 mock_spark = MagicMock()
 mock_file_path = 'dummy'

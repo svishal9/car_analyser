@@ -52,3 +52,5 @@ class PrintAnalysis(object):
         print("\n\nOne and half hour period with least cars:")
         for row in least_cars_period.collect():
             print(row.start_time, row.end_time, row.total_cars_in_90_minutes)
+
+
